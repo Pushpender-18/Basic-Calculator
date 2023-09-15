@@ -13,8 +13,13 @@ class CalculatorPage extends StatelessWidget {
       body: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
-          Display(msg: height.toString(), height: height / 2),
-          Keyboard(height: height / 2),
+          Display(
+            msg: height.toString(),
+            height: height * (4.8 / 12.5),
+          ),
+          Keyboard(
+            height: height * (7.7 / 12.5),
+          ),
         ],
       ),
     );
