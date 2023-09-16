@@ -9,7 +9,7 @@ class KeyData {
   final data = [
     const KeyConfig(name: 'AC', color: 1),
     const KeyConfig(name: 'C', color: 1),
-    const KeyConfig(name: '%', color: 1),
+    const KeyConfig(name: '.', color: 1),
     const KeyConfig(name: '/', color: 1),
     const KeyConfig(name: '7', color: 0),
     const KeyConfig(name: '8', color: 0),
@@ -23,9 +23,9 @@ class KeyData {
     const KeyConfig(name: '2', color: 0),
     const KeyConfig(name: '3', color: 0),
     const KeyConfig(name: '+', color: 1),
-    const KeyConfig(name: ' ', color: 0),
+    const KeyConfig(name: '()', color: 0),
     const KeyConfig(name: '0', color: 0),
-    const KeyConfig(name: '.', color: 0),
+    const KeyConfig(name: ')', color: 0),
     const KeyConfig(name: '=', color: 2),
   ];
 
