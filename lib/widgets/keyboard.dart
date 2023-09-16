@@ -1,17 +1,37 @@
 import 'package:calculator/data/key_data.dart';
+import 'package:calculator/provider/display_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class Keyboard extends StatelessWidget {
+class Keyboard extends ConsumerStatefulWidget {
   const Keyboard({super.key, required this.height});
   final double height;
 
+  @override
+  ConsumerState<Keyboard> createState() => _KeyboardState();
+}
+
+class _KeyboardState extends ConsumerState<Keyboard> {
   @override
   Widget build(BuildContext context) {
     final keyData = KeyData();
     var k = keyData.data;
 
+    void onKeyTap(KeyConfig key) {
+      var text = ref.read(focusedText.notifier);
+      if (key.type == KeyType.number || key.type == KeyType.operator) {
+        text.addText(key.name);
+      } else {
+        if (key.name == 'AC') {
+          text.clearText();
+        } else if (key.name == 'C') {
+          text.deleteText();
+        }
+      }
+    }
+
     return Container(
-      height: height,
+      height: widget.height,
       padding: const EdgeInsets.symmetric(horizontal: 12),
       color: const Color.fromARGB(255, 255, 255, 255),
       child: GridView.count(
@@ -24,7 +44,9 @@ class Keyboard extends StatelessWidget {
             InkWell(
               onTap: () {},
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  onKeyTap(k[i]);
+                },
                 style: TextButton.styleFrom(
                   foregroundColor: k[i].color == 0
                       ? Colors.grey

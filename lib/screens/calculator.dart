@@ -14,7 +14,6 @@ class CalculatorPage extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           Display(
-            msg: height.toString(),
             height: height * (4.8 / 12.5),
           ),
           Keyboard(
