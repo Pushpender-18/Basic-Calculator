@@ -1,5 +1,6 @@
 import 'package:calculator/data/key_data.dart';
 import 'package:calculator/provider/display_provider.dart';
+import 'package:calculator/provider/variable_provide.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,6 +18,7 @@ class _KeyboardState extends ConsumerState<Keyboard> {
   @override
   Widget build(BuildContext context) {
     final keyData = KeyData();
+    final mode = ref.watch(theme);
     var k = keyData.data;
 
     List<String> numberExtractor(String equation) {
@@ -164,7 +166,9 @@ class _KeyboardState extends ConsumerState<Keyboard> {
     return Container(
       height: widget.height,
       padding: const EdgeInsets.symmetric(horizontal: 12),
-      color: const Color.fromARGB(255, 255, 255, 255),
+      color: mode
+          ? const Color.fromARGB(255, 255, 255, 255)
+          : const Color.fromARGB(255, 24, 24, 24),
       child: GridView.count(
         physics: const NeverScrollableScrollPhysics(),
         crossAxisCount: 4,
@@ -180,15 +184,21 @@ class _KeyboardState extends ConsumerState<Keyboard> {
                 },
                 style: TextButton.styleFrom(
                   foregroundColor: k[i].color == 0
-                      ? Colors.grey
+                      ? (mode ? Colors.grey : Colors.grey)
                       : k[i].color == 1
-                          ? Colors.green
-                          : Colors.red,
+                          ? (mode ? Colors.green : Colors.grey[350])
+                          : (mode ? Colors.red : Colors.white),
                   backgroundColor: k[i].color == 0
-                      ? const Color.fromARGB(255, 250, 250, 250)
+                      ? (mode
+                          ? const Color.fromARGB(255, 250, 250, 250)
+                          : const Color.fromARGB(255, 24, 24, 24))
                       : k[i].color == 1
-                          ? const Color.fromARGB(255, 235, 250, 244)
-                          : const Color.fromARGB(255, 248, 217, 221),
+                          ? (mode
+                              ? const Color.fromARGB(255, 235, 250, 244)
+                              : const Color.fromARGB(255, 49, 49, 49))
+                          : (mode
+                              ? const Color.fromARGB(255, 248, 217, 221)
+                              : const Color.fromARGB(255, 109, 109, 109)),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25),
                   ),
@@ -197,10 +207,16 @@ class _KeyboardState extends ConsumerState<Keyboard> {
                   k[i].name,
                   style: TextStyle(
                     color: k[i].color == 0
-                        ? const Color.fromARGB(255, 108, 108, 108)
+                        ? (mode
+                            ? const Color.fromARGB(255, 108, 108, 108)
+                            : const Color.fromARGB(255, 190, 190, 190))
                         : k[i].color == 1
-                            ? const Color.fromARGB(255, 93, 204, 164)
-                            : const Color.fromARGB(255, 208, 1, 27),
+                            ? (mode
+                                ? const Color.fromARGB(255, 93, 204, 164)
+                                : const Color.fromARGB(255, 255, 255, 255))
+                            : (mode
+                                ? const Color.fromARGB(255, 208, 1, 27)
+                                : const Color.fromARGB(255, 255, 255, 255)),
                     fontSize: 24,
                   ),
                 ),
