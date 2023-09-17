@@ -144,7 +144,7 @@ class _KeyboardState extends ConsumerState<Keyboard> {
         ref.read(focusedText.notifier).addText(r.toString());
       } else {
         ref.read(focusedText.notifier).clearText();
-        ref.read(focusedText.notifier).addText(result.toString());
+        ref.read(focusedText.notifier).addText(result.toStringAsFixed(2));
       }
     }
 
