@@ -1,0 +1,35 @@
+[33mcommit 3b33f576c588a4719637ef8b8f631fb4b5c811e1[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Pushpender <pushpender272320@gmail.com>
+Date:   Sat Sep 16 16:39:33 2023 +0530
+
+    Keyboard half functional and text is dynamic
+
+[33mcommit 03d0c0d5175dfc7095c7a808bb46e69b75e120cf[m
+Author: Pushpender <pushpender272320@gmail.com>
+Date:   Sat Sep 16 15:53:03 2023 +0530
+
+    Added brackets and removed %
+
+[33mcommit 9ba16b00797786f1a38c76785a115bb30bdba76e[m
+Author: Pushpender <pushpender272320@gmail.com>
+Date:   Sat Sep 16 00:39:22 2023 +0530
+
+    Updated UI to Clean, Keyboard UI Done, Display Empty
+
+[33mcommit 6f69152cc1ffac3243cdf0e32b24f5bd0eed6b22[m
+Author: Pushpender <pushpender272320@gmail.com>
+Date:   Fri Sep 15 17:48:07 2023 +0530
+
+    Added research folder and added it to git ignore
+
+[33mcommit b6ffafb2dfc7b35ed512f626cc0d0ff90cec4db2[m
+Author: Pushpender <pushpender272320@gmail.com>
+Date:   Mon Sep 11 16:44:06 2023 +0530
+
+    Added Display and Keyboard(Not Working)
+
+[33mcommit dd27536ada455ca98f97d15b36ebfefe2cb7105d[m
+Author: Pushpender <pushpender272320@gmail.com>
+Date:   Mon Sep 11 15:16:48 2023 +0530
+
+    Initial Commit

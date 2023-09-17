@@ -35,10 +35,16 @@ class Display extends ConsumerWidget {
             alignment: Alignment.bottomRight,
             height: 100,
             child: Text(
-              overflow: TextOverflow.ellipsis,
+              overflow: TextOverflow.visible,
+              maxLines: 1,
+              textAlign: TextAlign.left,
               msg,
               style: TextStyle(
-                fontSize: msg.length < 9 ? 62 : 44,
+                fontSize: msg.length < 9
+                    ? 62
+                    : msg.length < 13
+                        ? 44
+                        : 32,
                 color: const Color.fromARGB(255, 74, 74, 74),
               ),
             ),

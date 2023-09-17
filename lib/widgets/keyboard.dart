@@ -3,6 +3,8 @@ import 'package:calculator/provider/display_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+Map<String, int> operators = {'+': 0, '-': 0, 'X': 1, '/': 1};
+
 class Keyboard extends ConsumerStatefulWidget {
   const Keyboard({super.key, required this.height});
   final double height;
@@ -17,6 +19,133 @@ class _KeyboardState extends ConsumerState<Keyboard> {
     final keyData = KeyData();
     var k = keyData.data;
 
+    List<String> numberExtractor(String equation) {
+      List<String> equ = [];
+      String temp = '';
+      for (int i = 0; i < equation.length; i++) {
+        if (operators.keys.contains(equation[i])) {
+          if (temp != '') {
+            equ.add(temp);
+          }
+          equ.add(equation[i]);
+          temp = '';
+        } else if (equation[i] == '(') {
+          equ.add(equation[i]);
+        } else if (equation[i] == ')') {
+          equ.add(temp);
+          equ.add(equation[i]);
+          temp = '';
+        } else {
+          temp += equation[i];
+        }
+      }
+      equ.add(temp);
+
+      return equ;
+    }
+
+    List<String> toPrefix(String equ) {
+      List<String> string = [];
+      List<String> stack = [];
+      List<String> equation = numberExtractor(equ);
+
+      for (int i = 0; i < equation.length; i++) {
+        if (operators.keys.contains(equation[i])) {
+          if (stack.isNotEmpty) {
+            for (int j = stack.length - 1; j >= 0; j--) {
+              if (stack[j] == '(') {
+                stack.add(equation[i]);
+                break;
+              } else if (operators[stack[j]]! >= operators[equation[i]]!) {
+                string.add(stack[j]);
+                stack.removeAt(j);
+              } else {
+                stack.add(equation[i]);
+                break;
+              }
+            }
+            if (stack.isEmpty) {
+              stack.add(equation[i]);
+            }
+          } else {
+            stack.add(equation[i]);
+          }
+        } else if (equation[i] == '(') {
+          stack.add(equation[i]);
+        } else if (equation[i] == ')') {
+          int j = stack.length - 1;
+          while (stack[j] != '(') {
+            string.add(stack[j]);
+            stack.removeAt(j);
+
+            j--;
+          }
+          stack.removeAt(j);
+        } else {
+          string.add(equation[i]);
+        }
+      }
+      if (stack.isNotEmpty) {
+        int j = stack.length - 1;
+        while (j >= 0) {
+          string.add(stack[j]);
+          stack.removeAt(j);
+          j--;
+        }
+      }
+      return string;
+    }
+
+    double evaluate(List<String> equation) {
+      double result = 0;
+      List<String> stack = [];
+      double x, y;
+
+      for (int i = 0; i < equation.length; i++) {
+        if (operators.keys.contains(equation[i])) {
+          x = double.parse(stack[stack.length - 2]);
+          y = double.parse(stack[stack.length - 1]);
+
+          switch (equation[i]) {
+            case '+':
+              result = x + y;
+              break;
+            case '-':
+              result = x - y;
+              break;
+            case 'X':
+              result = x * y;
+              break;
+            case '/':
+              result = x / y;
+              break;
+            default:
+              break;
+          }
+          stack = stack.sublist(0, stack.length - 2);
+          stack.add(result.toString());
+        } else {
+          stack.add(equation[i]);
+        }
+      }
+
+      return result;
+    }
+
+    void calculate(String equ) {
+      List<String> equation = toPrefix(equ);
+      double result = evaluate(equation);
+      int r = 0;
+      if ((result * 10) % 10 == 0) {
+        r = result.toInt();
+        ref.read(focusedText.notifier).clearText();
+        ref.read(focusedText.notifier).addText(r.toString());
+      } else {
+        ref.read(focusedText.notifier).clearText();
+        ref.read(focusedText.notifier).addText(result.toString());
+      }
+    }
+
     void onKeyTap(KeyConfig key) {
       var text = ref.read(focusedText.notifier);
       if (key.type == KeyType.number || key.type == KeyType.operator) {
@@ -26,6 +155,8 @@ class _KeyboardState extends ConsumerState<Keyboard> {
           text.clearText();
         } else if (key.name == 'C') {
           text.deleteText();
+        } else if (key.name == '=') {
+          calculate(ref.read(focusedText));
         }
       }
     }
