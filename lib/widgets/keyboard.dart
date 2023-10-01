@@ -143,7 +143,6 @@ class _KeyboardState extends ConsumerState<Keyboard> {
     void calculate(String equ) {
       List<String> equation = toPrefix(equ);
       equation.remove('');
-      print(equation);
       double result = evaluate(equation);
       int r = 0;
       if ((result * 10) % 10 == 0) {
