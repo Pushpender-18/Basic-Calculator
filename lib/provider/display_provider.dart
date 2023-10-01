@@ -12,6 +12,17 @@ class FocusedText extends StateNotifier<String> {
         if (operators.keys.contains(state[state.length - 1]) &&
             operators.keys.contains(text)) {
           state = state.substring(0, state.length - 1);
+        } else if (text == '.') {
+          int i = state.length;
+          while (i > 0) {
+            if (operators.keys.contains(state.substring(i - 1, i))) {
+              state = state + text;
+            } else if (state.substring(i - 1, i) == '.') {
+              text = '';
+              break;
+            }
+            i--;
+          }
         } else if (state.substring(state.length - 1, state.length) == '.' &&
             text == '.') {
           text = '';
