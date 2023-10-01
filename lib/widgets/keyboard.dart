@@ -103,6 +103,12 @@ class _KeyboardState extends ConsumerState<Keyboard> {
       List<String> stack = [];
       double x, y;
 
+      if (equation.length < 3) {
+        result = double.parse(equation[0]);
+
+        return result;
+      }
+
       for (int i = 0; i < equation.length; i++) {
         if (operators.keys.contains(equation[i])) {
           x = double.parse(stack[stack.length - 2]);
